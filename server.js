@@ -7,6 +7,11 @@ const PORT = 3000
 const app = express()
 
 dbconnect()
+
+app.get('/test', (req, res) => {
+  res.send('서버 생존 확인!');
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
