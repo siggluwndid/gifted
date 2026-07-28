@@ -10,7 +10,7 @@ async function sendReminderEmail(urgentFoods) {
     // SMTP 연결이 아니라 HTTP 요청으로 쏘기 때문에 50초 멈춤 현상 0%
     const data = await resend.emails.send({
       from: 'onboarding@resend.dev', // Resend 제공 테스트용 발신 주소
-      to: 'siggluwndid@naver.com',  // 민준 님 수신 이메일
+      to: 'baechoo0527@gmail.com',  // 민준 님 수신 이메일
       subject: '🚨 [경고] 유통기한 임박 식품 알림',
       text: `안녕하세요!\n\n아래 식품 유통기한이 임박했습니다.\n\n${foodListText}`
     });
