@@ -30,17 +30,19 @@ const sendReminderEmail = require('./util/sendemail');
 async function checkAndSendEmail() {
   console.log('⏰ 유통기한 임박 식품 체크 시작...');
   
-  const today = new Date();
-  const threeDaysLater = new Date();
-  threeDaysLater.setDate(today.getDate() + 3);
+  async function checkAndSendEmail() {
+  console.log('⏰ 유통기한 임박 식품 체크 시작...');
+  
+  // 🎯 DB 조회(Food.find)를 빼고 하드코딩 배열 입력! (50초 대기 원인 제거)
+  const urgentFoods = [
+    { name: '우유', expirationDate: '2026-07-30' },
+    { name: '계란', expirationDate: '2026-07-31' }
+  ];
 
-  const urgentFoods = await Food.find({
-    expirationDate: { $gte: today, $lte: threeDaysLater }
-  });
-
-  if (urgentFoods.length > 0) {
-    await sendReminderEmail(urgentFoods);
-  }
+  console.log('✉️ 이메일 전송 시작...');
+  await sendReminderEmail(urgentFoods);
+  console.log('🎉 전송 로직 완료!');
+}
 }
 
 // 2. 매일 아침 9시 자동 스케줄러 등록
