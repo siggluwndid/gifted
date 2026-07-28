@@ -3,6 +3,9 @@ const nodemailer = require('nodemailer');
 // 1. 이메일을 보낼 '집배원(transporter)' 설정
 const transporter = nodemailer.createTransport({
   service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 465,            // 💡 클라우드 환경 포트 명시
+  secure: true,
   auth: {
     user: 'baechoo0527@gmail.com',
     pass: 'ubur hlev wndu txxd'
