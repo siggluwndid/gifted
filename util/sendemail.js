@@ -20,7 +20,7 @@ async function sendReminderEmail(urgentFoods) {
   // 메일 옵션 (받는 사람, 제목, 내용 전부 하드코딩!)
   const mailOptions = {
     from: '"냉장고에 굶주린 검은흑곰🐻" <baechoo0527@gmail.com>',
-    to: 'jwjulian0907@gmail.com', 
+    to: 'siggluwndid@naver.com', 
     subject: '🚨 [경고] 냉장고에 유통기한이 임박한 식품이 있습니다',
     text: `안녕하세요!\n\n아래 식품들의 유통기한이 3일 이하로 남았습니다.\n빠른 소비 권장드립니다!\n\n이우진\n\n오늘도 좋은 하루 되세요!`
   };

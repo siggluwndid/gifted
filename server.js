@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/test", (req,res) => {
     checkAndSendEmail()
+    res.send("OK!!")
 })
 
 const getRouter = require('./routes/api');
