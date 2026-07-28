@@ -1,36 +1,21 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
+require('dotenv').config()
+// Resend 무료 API 키 입력
+const resend = new Resend(process.env.RESCENE)
 
-// 1. 이메일을 보낼 '집배원(transporter)' 설정
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  host: 'smtp.gmail.com',
-  port: 465,            // 💡 클라우드 환경 포트 명시
-  secure: true,
-  auth: {
-    user: 'baechoo0527@gmail.com',
-    pass: 'ubur hlev wndu txxd'
-  }
-});
-
-// 2. 메일 전송 함수 정의
 async function sendReminderEmail(urgentFoods) {
-  const foodListText = urgentFoods.map(food => {
-    const rawExp = food.expirationDate || food.expiration;
-    const expDate = String(rawExp).split('T')[0];
-    return `- ${food.name} (유통기한: ${expDate})`;
-  }).join('\n');
-
-  // 메일 옵션 (받는 사람, 제목, 내용 전부 하드코딩!)
-  const mailOptions = {
-    from: '"냉장고에 굶주린 검은흑곰🐻" <baechoo0527@gmail.com>',
-    to: 'siggluwndid@naver.com', 
-    subject: '🚨 [경고] 냉장고에 유통기한이 임박한 식품이 있습니다',
-    text: `안녕하세요!\n\n아래 식품들의 유통기한이 3일 이하로 남았습니다.\n빠른 소비 권장드립니다!\n\n이우진\n\n오늘도 좋은 하루 되세요!`
-  };
+  const foodListText = urgentFoods.map(food => `- ${food.name} (유통기한: ${food.expirationDate})`).join('\n');
 
   try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log('✉️ 이메일 전송 성공:', info.response);
+    // SMTP 연결이 아니라 HTTP 요청으로 쏘기 때문에 50초 멈춤 현상 0%
+    const data = await resend.emails.send({
+      from: 'onboarding@resend.dev', // Resend 제공 테스트용 발신 주소
+      to: 'jwjulian0907@gmail.com',  // 민준 님 수신 이메일
+      subject: '🚨 [경고] 유통기한 임박 식품 알림',
+      text: `안녕하세요!\n\n아래 식품 유통기한이 임박했습니다.\n\n${foodListText}`
+    });
+
+    console.log('✉️ 이메일 전송 성공! ID:', data.id);
   } catch (error) {
     console.error('❌ 이메일 전송 실패:', error);
   }
