@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Food = require('../model/Food'); // 작성하신 Mongoose 모델 경로에 맞게 수정하세요
+const Food = require('../model/Food'); 
 
 router.get('/', async (req, res) => {
     try {
-        // 조건 없이 MongoDB 컬렉션의 모든 데이터를 싹 다 조회
         const allFoods = await Food.find({});
 
-        // 모든 데이터를 그대로 JSON으로 응답
         return res.status(200).json({
             success: true,
             count: allFoods.length,
