@@ -26,8 +26,6 @@ def fridge_to_json():
         else:
             print("위치는 '냉장' 또는 '냉동'만 입력하세요.")
             continue
-
-    # 트리 데이터를 DB용 필드명(storageType, expirationDate)으로 정리
     for location in fridge_root.children:
         for food in location.children:
             food_data = {
@@ -43,7 +41,6 @@ def fridge_to_json():
         indent=4
     )
 
-    # Express 서버로 POST 요청
     try:
         response = requests.post(
             f"{SERVER_URL}/",
